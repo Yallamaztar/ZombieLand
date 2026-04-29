@@ -1,8 +1,7 @@
 # Zombieland (rewrite)
 
-rewrite modernized version of the famous [zombieland gamemode](https://cabconmodding.com/threads/zombieland-by-cooljay-black-ops-ii-gamemode-update-8.6947/) originally made by CoolJay
+This is a modernized rewrite of the classic [Zombieland gamemode](https://cabconmodding.com/threads/zombieland-by-cooljay-black-ops-ii-gamemode-update-8.6947/) originally created by CoolJay for Black Ops II, the goal is to bring it up to date while fixing issues caused by the decompiler and adding some new features
 
-**many parts of his code are reused here** but also adding some of my own stuff / fixing stuff that the decompiler broke 
-
-
-**VERY WIP STILL** will be working on this whenever i got time and interest
+## Notes
+- **Some parts of the original code are reused here**
+- Contributions or suggestions are welcome
