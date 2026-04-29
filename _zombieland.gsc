@@ -142,7 +142,7 @@ onPlayerDied() {
         self waittill("death");
         if (level.zombiefication_time == 0 && self.status != "zombie") {
             self notify("injected");
-            level.infected_players[self scripts\mp\zombieland\players::cleanName()] = "infected";
+            self scripts\mp\zombieland\players::setInfected(true);
 
             self [[level.axis]]();
             self resetdvars();
@@ -176,7 +176,7 @@ onPlayerDied() {
     }
 }
 
-onPlayerLeave() {
+onPlayerDisconnect() {
     level endon("game_ended");
     for(;;) {
         self waittill("disconnect");
