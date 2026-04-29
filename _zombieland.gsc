@@ -70,13 +70,11 @@ onPlayerSpawned() {
     self.health_monitor = 0;
     self.threads_readay = 1;
 
-    // TODO:
-    // create these function
-    self thread scripts\mp\zombieland\monitor::weaponMonitor();
+    self thread scripts\mp\zombieland\monitor::weaponMonitor(); // TODO: implement weaponMonitor()
     self thread scripts\mp\zombieland\monitor::hudMonitor();
     self thread scripts\mp\zombieland\monitor::teamMonitor();
-    self thread scripts\mp\zombieland\monitor::customTeamMonitor();
-    self thread scripts\mp\zombieland\monitor::damageMonitor();
+    self thread scripts\mp\zombieland\monitor::customTeamMonitor(); // TODO: implement customTeamMonitor()
+    self thread scripts\mp\zombieland\monitor::damageMonitor(); // TODO: implement damageMonitor()
     
     // TODO:
     // create these too
@@ -103,14 +101,7 @@ onPlayerSpawned() {
             level thread setupCustomMap();
 
             level.custom_map_ready = 1;
-
-            // TODO:
-            // maybe rename these unless these are perks
-            self.xsped = 0;
-            self.fatty = 0;
-            self.metallo = 0;
-            self.terrorista = 0;
-            self.doge = 0;
+            self scripts\mp\zombieland\players::resetPerks();
 
             self show();
             self notify("stop_linking_model");
@@ -151,7 +142,7 @@ onPlayerDied() {
             self.current_deaths = 0;
             self.pers["deaths"] = 0;
 
-            level thread scripts\mp\zombieland\players::setForEveryone("humandied", 1);
+            level thread scripts\mp\zombieland\players::setForEveryone("human_died", 1);
             
             // TODO:
             // create the menu() function
@@ -164,7 +155,7 @@ onPlayerDied() {
                 self.money -= level.money_per_zombie_death;
                 self.suicide = 0;
 
-                self resetPerks();
+                self scripts\mp\zombieland\players::resetPerks();
                 self show();
 
                 self notify("stop_linking_model");
@@ -181,17 +172,6 @@ onPlayerDisconnect() {
         self waittill("disconnect");
         self scripts\mp\zombieland\hud::destroyPlayerHuds();
     }
-}
-
-resetPerks() {
-    if (self.status == "zombie") {
-        self.xsped = 0;
-    }
-
-    self.fatty = 0;
-	self.metallo = 0;
-	self.terrorista = 0;
-	self.doge = 0;
 }
 
 resetdvars() {
