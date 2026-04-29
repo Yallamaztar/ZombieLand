@@ -2,11 +2,10 @@
  * Zombieland (Modernized)
  * Custom zombies-style gamemode for T6MP
  * Revised by @Yallamaztar | Originally made by @CoolJay
- * Version: 0.1.0
  */
 
 main() {
-    level.__version__  = "0.1.0";
+    level.__version__  = "0.1.1";
     
     SetGametypeSetting("prematchperiod", 5);    
     SetGametypeSetting("preroundperiod", 5);
