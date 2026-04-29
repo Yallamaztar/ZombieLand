@@ -94,3 +94,14 @@ destroyhuds() {
 	level.infobar_text maps\mp\gametypes\_hud_util::destroyelem();
 	level.infobar_text scripts\mp\zombieland\overflow::destroyelement();
 }
+
+destroyPlayerHuds() {
+	player.money_hud maps\mp\gametypes\_hud_util::destroyelem();
+	player.money_hud scripts\mp\zombieland\overflow::destroyelement();
+	player.health_hud maps\mp\gametypes\_hud_util::destroyelem();
+	player.health_hud scripts\mp\zombieland\overflow::destroyelement();
+	player.health_value maps\mp\gametypes\_hud_util::destroyelem();
+	player.health_value scripts\mp\zombieland\overflow::destroyelement();
+	player.money_value maps\mp\gametypes\_hud_util::destroyelem();
+	player.money_value scripts\mp\zombieland\overflow::destroyelement();
+}
