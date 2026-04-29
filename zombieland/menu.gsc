@@ -1,5 +1,5 @@
 createMenu() {
-    if (self.status == "zombies" || self.status == "humans") {
+    if (self.status == "zombies" || self.status == "human") {
         if (!self.menu_init) {
             self.menu_init = 1;
             self thread initMenu();
