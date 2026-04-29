@@ -52,6 +52,10 @@ initModels() {
 	precacheshader( "hud_remote_missile_target" );
 	precacheshader( "headicon_dead" );
 	precacheshader( "line_horizontal" );
+
+	if (getdvar("map_name") == "mp_nightclub") {
+        level thread initNightClubModels();
+    }
 }
 
 initNightClubModels() {

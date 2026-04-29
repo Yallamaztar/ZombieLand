@@ -15,9 +15,6 @@ main() {
     SetDvar("ui_discord_url", "https://discord.gg/^6zombieland^7");
 
     level thread scripts\mp\zombieland\models::initModels();
-    if (getdvar("map_name") == "mp_nightclub") {
-        level thread scripts\mp\zombieland\models::initNightClubModels();
-    }
 }
 
 init() {
