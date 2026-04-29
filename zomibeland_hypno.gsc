@@ -1,6 +1,7 @@
 /*
  * Zombieland (Modernized)
  * Custom zombies-style gamemode for T6MP
+ * Revised by @Yallamaztar | Originally made by @CoolJay
  * Version: 0.1.0
  */
 
@@ -53,6 +54,7 @@ onPlayerConnect() {
         player.health = 100;
         player.money_multiplier = 1;
 
+        // TODO:
         // idk if i finished this yet, check later
         player scripts\mp\zombieland\menu::createMenu();
         
@@ -67,7 +69,6 @@ onPlayerSpawned() {
     isFirstSpawn = 1;
     self.health_monitor = 0;
     self.threads_readay = 1;
-
 
     // TODO:
     // create these function
@@ -89,11 +90,12 @@ onPlayerSpawned() {
         self waittill("spawned_player");
         if (isFirstSpawn) {
             isFirstSpawn = 0;
-
             if (self ishost()) {
                 self FreezeControls(false);
             }
         }
+
+        self.menu.closeondeath = 0;
 
         if (level.use_custom_maps && !isdefined(level.custom_map_ready)) {
             // TODO:
@@ -101,6 +103,9 @@ onPlayerSpawned() {
             level thread setupCustomMap();
 
             level.custom_map_ready = 1;
+
+            // TODO:
+            // maybe rename these unless these are perks
             self.xsped = 0;
             self.fatty = 0;
             self.metallo = 0;
