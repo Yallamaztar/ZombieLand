@@ -1,3 +1,5 @@
+#include scripts\mp\zombieland\utils;
+
 monitorGame() {
     level endon("game_ended");
     level endon("winner_declared");
@@ -72,7 +74,6 @@ finishgame() {
 	level thread scripts\mp\zombieland\hud::destroyhuds();
 }
 
-
 monitorTimer() {
     level endon("game_ended");
     level endon("winner_declared");
@@ -84,6 +85,65 @@ monitorTimer() {
                 level.current_game_time++;
             } else {
                 level notify("timelimit_reached");
+            }
+        }
+    }
+}
+
+monitorTeam() {
+    self endon("disconnect");
+
+    for(;;) {
+        if (IsAlive(self) && self.pers["team"] != "axis" && self.starting_zombie) {
+            self [[level.axis]]();
+            self.status = "zombie";
+
+            wait_network_frame();
+            self notify( "menuresponse", "changeclass", "class_smg" );
+            self.starting_zombie = 0;
+        }
+
+        if (self.status == "human" && self.pers["team"] == "axis") {
+            self [[level.allies]]();
+            self.status = "human";
+
+            wait_network_frame();
+            self notify("menuresponse", "changeclass", "class_smg");
+        }
+
+        if(self.status == "zombie" && self.pers["team"] == "allies") {
+		    self [[level.axis]]();
+            self.status = "zombie";
+
+            wait_network_frame();
+            self notify("menuresponse", "changeclass", "class_smg");
+        }
+
+        if (self.status == "human" && self.pers["team"] == "axis") {
+            if (level.zombiefication_time <= 0 || level.inprematchperiod) {
+                return;
+            }
+
+            self [[level.allies]]();
+            self.status = "human";
+            wait 1;
+
+            if (self.status == "zombie" || level.zombiefication_time <= 0 || self.pers["team"] != "axis") {
+		        return;
+            }
+
+            self [[level.allies]]();
+            self.status = "human";
+            wait 0.5;
+
+            self notify("menuresponse", "changeclass", "class_smg");
+
+            if (self.pers["team"] == "axis") {
+                self [[level.axis]]();
+                self.status = "zombie";
+
+                wait_network_frame();
+                self notify("menuresponse", "changeclass", "class_smg");
             }
         }
     }
