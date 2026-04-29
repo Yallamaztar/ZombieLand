@@ -59,6 +59,7 @@ onPlayerConnect() {
         player scripts\mp\zombieland\menu::createMenu();
         
         player thread onPlayerSpawned();
+        player thread onPlayerDied();
     }
 }
 
@@ -131,6 +132,75 @@ onPlayerSpawned() {
 
         self giveWeapons(self.status);
     }
+}
+
+onPlayerDied() {
+    level endon("game_ended");
+    self endon("disconnect");
+
+    for(;;) {
+        self waittill("death");
+        if (level.zombiefication_time == 0 && self.status != "zombie") {
+            self notify("injected");
+            level.infected_players[self scripts\mp\zombieland\players::cleanName()] = "infected";
+
+            self [[level.axis]]();
+            self resetdvars();
+            self.status = "zombie";
+
+            self.max_health = 100;
+            self.current_deaths = 0;
+            self.pers["deaths"] = 0;
+
+            level thread scripts\mp\zombieland\players::setForEveryone("humandied", 1);
+            
+            // TODO:
+            // create the menu() function
+            self thread scripts\mp\zombieland\menu::menu();
+            level thread maps\mp\gametypes\_globallogic_ui::closemenus()
+        }
+
+        if (self.suicide) {
+            if (self.money >= level.money_per_zombie_death) {
+                self.money -= level.money_per_zombie_death;
+                self.suicide = 0;
+
+                self resetPerks();
+                self show();
+
+                self notify("stop_linking_model");
+                self.link_model Delete();
+                self IPrintLn("Killing yourself wont give you any money");
+            }
+        }
+    }
+}
+
+onPlayerLeave() {
+    level endon("game_ended");
+    for(;;) {
+        self waittill("disconnect");
+        self scripts\mp\zombieland\hud::destroyPlayerHuds();
+    }
+}
+
+resetPerks() {
+    if (self.status == "zombie") {
+        self.xsped = 0;
+    }
+
+    self.fatty = 0;
+	self.metallo = 0;
+	self.terrorista = 0;
+	self.doge = 0;
+}
+
+resetdvars() {
+	self.infrared_on = undefined;
+	self.infinite_ammo = undefined;
+	self.uav = undefined;
+	self setclientuivisibilityflag("g_compassShowEnemies", 0);
+
 }
 
 giveWeapons(status) {
