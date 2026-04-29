@@ -23,3 +23,19 @@ setForEveryone(key, value) {
         player.key = value;
     }
 }
+
+isInfected() {
+    return level.infected_players[self scripts\mp\zombieland\players::cleanName()] == "infected";
+}
+
+isInInfected() {
+    return isdefined (level.infected_players[self scripts\mp\zombieland\players::cleanName()]);
+}
+
+setInfected(state) {
+    if (state) {
+        level.infected_players[self scripts\mp\zombieland\players::cleanName()] = "infected";
+    } else {
+        level.infected_players[self scripts\mp\zombieland\players::cleanName()] = undefined;
+    }
+}
