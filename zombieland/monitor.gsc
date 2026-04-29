@@ -90,7 +90,7 @@ monitorTimer() {
     }
 }
 
-monitorTeam() {
+teamMonitor() {
     self endon("disconnect");
 
     for(;;) {
@@ -146,5 +146,68 @@ monitorTeam() {
                 self notify("menuresponse", "changeclass", "class_smg");
             }
         }
+    }
+}
+
+hudMonitor() {
+    level endon("game_ended");
+    level endon("winner_declared");
+    self endon("disconnect");
+
+    self scripts\mp\zombieland\hud::storehuds();
+    self.current_kills = self.pers["kills"];
+    self.current_deaths = self.pers["deaths"];
+    self.current_assists = self.pers["assists"];
+
+    for(;;) {
+        if (self.give_cash) {
+            if (self.human_died) {
+                if (self.status == "human") {
+                    self.money += level.survivor_cash_bonus;
+                    self IPrintLn("You have been given ^6$" + level.survivor_cash_bonus + "^7 for surviving!");
+                }
+
+                self.human_died = 0;
+                wait_network_frame();
+            }
+
+            if (self.current_kills != self.pers["kills"]) {
+                if (self.status == "human") {
+                    self.money += level.money_per_kill * self.money_multiplier;
+                    self.current_kills = self.pers["kills"];
+                } else if (self.status == "zombie") {
+                    self.money += self.money + level.money_per_kill_zombie * self.money_multiplier;
+                    self.current_kills = self.pers["kills"];
+                }
+            }
+
+            if (self.current_assists != self.pers["assists"]) {
+                if (self.status == "human") {
+                    self.money += level.money_per_assist * self.money_multiplier;
+                    self.current_assists = self.pers["assists"];
+                } else if (self.status == "zombie") {
+                    self.money += self.money + level.money_per_assist_zombie * self.money_multiplier;
+                    self.current_assists = self.pers["assists"];
+                }
+            }
+
+            if (self.status == "zombie" && self.current_deaths != self.pers["deaths"]) {
+                self.money += self.money + level.money_per_death_zombie * self.money_multiplier;
+                self.current_deaths = self.pers["deaths"];
+                self scripts\mp\zombieland\players::resetPerks();
+                self show;
+                self notify("stop_linking_model");
+                self.link_model Delete();
+            }
+        } else {
+            self.current_kills = self.pers["kills"];
+            self.current_deaths = self.pers["deaths"];
+            self.current_assists = self.pers["assists"];
+            wait_network_frame();
+        }
+
+        self.health_value SetValue(self.health);
+        self.money_value SetValue(self.money);
+        wait 0.05;
     }
 }
