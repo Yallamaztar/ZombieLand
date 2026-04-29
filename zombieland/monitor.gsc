@@ -64,33 +64,14 @@ endgame() {
     level thread maps\mp\gametypes\_globallogic::forceend();
 }
 
-finishgame()
-{
+finishgame() {
 	level.timehud fadeovertime(0.5);
 	level.timehud.alpha = 0;
 	level.clockhud fadeovertime(0.5);
 	level.clockhud.alpha = 0;
-	level thread destroyhuds();
+	level thread scripts\mp\zombieland\hud::destroyhuds();
 }
 
-destroyhuds()
-{
-	foreach(player in level.players)
-	{
-		player.money_hud maps\mp\gametypes\_hud_util::destroyelem();
-		player.money_hud scripts\mp\zombieland\overflow::destroyelement();
-		player.health_hud maps\mp\gametypes\_hud_util::destroyelem();
-		player.health_hud scripts\mp\zombieland\overflow::destroyelement();
-		player.health_value maps\mp\gametypes\_hud_util::destroyelem();
-		player.health_value scripts\mp\zombieland\overflow::destroyelement();
-		player.money_value maps\mp\gametypes\_hud_util::destroyelem();
-		player.money_value scripts\mp\zombieland\overflow::destroyelement();
-		wait 0.05;
-	}
-	level.infobar_text maps\mp\gametypes\_hud_util::destroyelem();
-	level.infobar_text scripts\mp\zombieland\overflow::destroyelement();
-
-}
 
 monitorTimer() {
     level endon("game_ended");

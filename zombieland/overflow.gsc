@@ -2,98 +2,39 @@
 
 overflowfix()
 {
-	level waittill( "connected", player );
+	level waittill("connected", player);
 	level.stringtable = [];
 	level.textelementtable = [];
-	textanchor = createserverfontstring( "default", 1 );
-	textanchor setelementtext( "Anchor" );
+	textanchor = createserverfontstring("default", 1);
+	textanchor setelementtext("Anchor");
 	textanchor.alpha = 0;
-	if( getdvar( "g_gametype" ) == "hctdm" || getdvar( "g_gametype" ) == "tdm" )
-	{
-		limit = 54;
-	}
-	if( getdvar( "g_gametype" ) == "hcdm" || getdvar( "g_gametype" ) == "dm" )
-	{
-		limit = 54;
-	}
-	if( getdvar( "g_gametype" ) == "hcdom" || getdvar( "g_gametype" ) == "dom" )
-	{
-		limit = 38;
-	}
-	if( getdvar( "g_gametype" ) == "hcdem" || getdvar( "g_gametype" ) == "dem" )
-	{
-		limit = 41;
-	}
-	if( getdvar( "g_gametype" ) == "hcconf" || getdvar( "g_gametype" ) == "conf" )
-	{
-		limit = 53;
-	}
-	if( getdvar( "g_gametype" ) == "hckoth" || getdvar( "g_gametype" ) == "koth" )
-	{
-		limit = 41;
-	}
-	if( getdvar( "g_gametype" ) == "hchq" || getdvar( "g_gametype" ) == "hq" )
-	{
-		limit = 43;
-	}
-	if( getdvar( "g_gametype" ) == "hcctf" || getdvar( "g_gametype" ) == "ctf" )
-	{
-		limit = 32;
-	}
-	if( getdvar( "g_gametype" ) == "hcsd" || getdvar( "g_gametype" ) == "sd" )
-	{
-		limit = 38;
-	}
-	if( getdvar( "g_gametype" ) == "hconeflag" || getdvar( "g_gametype" ) == "oneflag" )
-	{
-		limit = 25;
-	}
-	if( getdvar( "g_gametype" ) == "gun" )
-	{
-		limit = 48;
-	}
-	if( getdvar( "g_gametype" ) == "oic" )
-	{
-		limit = 51;
-	}
-	if( getdvar( "g_gametype" ) == "shrp" )
-	{
-		limit = 48;
-	}
-	if( getdvar( "g_gametype" ) == "sas" )
-	{
-		limit = 50;
-	}
-	if( IsDefined( level.stringoptimization ) )
-	{
+	
+	limit = getLimit();
+	if(IsDefined(level.stringoptimization)) {
 		limit = limit + 172;
 	}
-	while( !(level.gameended) )
-	{
-		if( !(IsDefined( textanchor2 )) && level.stringtable.size >= 100 )
-		{
-			textanchor2 = createserverfontstring( "default", 1 );
-			textanchor2 setelementtext( "Anchor2" );
+
+	while(!level.gameended) {
+		if(!IsDefined(textanchor2) && level.stringtable.size >= 100) {
+			textanchor2 = createserverfontstring("default", 1);
+			textanchor2 setelementtext("Anchor2");
 			textanchor2.alpha = 0;
 		}
-		if( level.stringtable.size >= limit )
-		{
-			if( IsDefined( textanchor2 ) )
-			{
+
+		if(level.stringtable.size >= limit) {
+			if(IsDefined(textanchor2)) {
 				textanchor2 clearalltextafterhudelem();
 				textanchor2 destroyelement();
 			}
+
 			textanchor clearalltextafterhudelem();
+
 			level.stringtable = [];
-			foreach( textelement in level.textelementtable )
-			{
-				if( !(IsDefined( self.label )) )
-				{
-					textelement setelementtext( textelement.text );
-				}
-				else
-				{
-					textelement setelementvaluetext( textelement.text );
+			foreach(e in level.textelementtable) {
+				if(!(IsDefined(self.label))) {
+					e setelementtext(e.text);
+				} else {
+					e setelementvaluetext(e.text);
 				}
 			}
 		}
@@ -102,55 +43,99 @@ overflowfix()
 
 }
 
-setelementtext( text )
-{
-	self settext( text );
-	if( self.text != text )
-	{
-		self.text = text;
-	}
-	if( !(isinarray( level.stringtable, text )) )
-	{
-		level.stringtable[level.stringtable.size] = text;
-	}
-	if( !(isinarray( level.textelementtable, self )) )
-	{
-		level.textelementtable[level.textelementtable.size] = self;
-	}
+getLimit() {
+	switch (getdvar("g_gametype")) {
+		case "hctdm":
+		case "tdm":
+		case "hcdm":
+		case "dm":
+			return 54;
 
+		case "hcconf":
+		case "conf":
+			return 53;
+
+		case "oic":
+			return 51;
+
+		case "sas":
+			return 50;
+
+		case "gun":
+		case "shrp":
+			return 48;
+
+		case "hchq":
+		case "hq":
+			return 43;
+
+			case "hcdem":
+		case "dem":
+		case "hckoth":
+		case "koth":
+			return 41;
+
+		case "hcdom":
+		case "dom":
+		case "hcsd":
+		case "sd":
+			return 38;
+
+		case "hcctf":
+		case "ctf":
+			return 32;
+
+		case "hconeflag":
+		case "oneflag":
+			return 25;
+
+		default:
+			return 0;
+	}
 }
 
-setelementvaluetext( text )
-{
+setelementtext(text) {
+	self settext(text);
+	if(self.text != text) {
+		self.text = text;
+	}
+
+	if(!isinarray(level.stringtable, text)) {
+		level.stringtable[level.stringtable.size] = text;
+	}
+
+	if(!isinarray(level.textelementtable, self)) {
+		level.textelementtable[level.textelementtable.size] = self;
+	}
+}
+
+setelementvaluetext(text) {
 	self.label += text;
-	if( self.text != text )
-	{
+	if(self.text != text) {
 		self.text = text;
 	}
-	if( !(isinarray( level.stringtable, text )) )
-	{
+
+	if(!isinarray(level.stringtable, text)) {
 		level.stringtable[level.stringtable.size] = text;
 	}
-	if( !(isinarray( level.textelementtable, self )) )
-	{
+
+	if(!isinarray(level.textelementtable, self)) {
 		level.textelementtable[level.textelementtable.size] = self;
 	}
 
 }
 
-destroyelement()
-{
-	if( isinarray( level.textelementtable, self ) )
-	{
-		arrayremovevalue( level.textelementtable, self );
+destroyelement() {
+	if(isinarray(level.textelementtable, self)) {
+		arrayremovevalue(level.textelementtable, self);
 	}
-	if( IsDefined( self.elemtype ) )
-	{
+
+	if(IsDefined(self.elemtype)) {
 		self.frame destroy();
 		self.bar destroy();
 		self.barframe destroy();
 	}
+
 	self destroy();
 
 }
-
