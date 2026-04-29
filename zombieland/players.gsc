@@ -39,3 +39,11 @@ setInfected(state) {
         level.infected_players[self scripts\mp\zombieland\players::cleanName()] = undefined;
     }
 }
+
+resetPerks() {
+    self.xsped = 0;
+    self.fatty = 0;
+    self.metallo = 0;
+    self.terrorista = 0;
+    self.doge = 0;
+}
