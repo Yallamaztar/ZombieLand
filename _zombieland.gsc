@@ -5,7 +5,7 @@
  */
 
 main() {
-    level.__version__  = "0.1.1";
+    level.__version__  = "0.1.2";
     
     SetGametypeSetting("prematchperiod", 5);    
     SetGametypeSetting("preroundperiod", 5);
