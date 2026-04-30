@@ -56,7 +56,7 @@ onPlayerSpawned() {
     self.health_monitor = 0;
     self.threads_readay = 1;
 
-    // self thread scripts\mp\zombieland\monitor::weaponMonitor(); // TODO: implement weaponMonitor()
+    self thread scripts\mp\zombieland\monitor::weaponMonitor();
     self thread scripts\mp\zombieland\monitor::hudMonitor();
     self thread scripts\mp\zombieland\monitor::teamMonitor();
     // self thread scripts\mp\zombieland\monitor::customTeamMonitor(); // TODO: implement customTeamMonitor()

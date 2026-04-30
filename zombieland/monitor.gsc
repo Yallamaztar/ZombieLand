@@ -223,13 +223,13 @@ healthMonitor() {
 	
 	self.health_monitor = 1;
 	for(;;) {
-        if(!self.adding_health) {
-            if(self.health > 100) {
+        if (!self.adding_health) {
+            if (self.health > 100) {
                 self.max_health = self.health;
             }
         }
 
-        if(self.health < 100) {
+        if (self.health < 100) {
             self.max_health = 100;
             self.health_monitor = 0;
             self notify("normal_health");
@@ -237,4 +237,22 @@ healthMonitor() {
 
         wait 0.01;
     }
+}
+
+weaponMonitor() {
+    level endon("game_ended");
+	level endon("winner_declared");
+	self endon("disconnect");
+	
+	for(;;) {
+        if (level.zombiefication_time != 0 && level.inprematchperiod && isalive(self) && self.status == "human") {
+            self.current_weapon = self getcurrentweapon();
+            if (self.current_weapon != level.player_spawn_weapon) {
+                self.status = "human";
+                self scripts\mp\zombieland\utils::giveWeapons(self.status);
+                wait 1;
+            }
+        }
+        wait 0.05;
+	}
 }
