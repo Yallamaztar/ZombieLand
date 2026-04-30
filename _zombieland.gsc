@@ -59,7 +59,7 @@ onPlayerSpawned() {
     self thread scripts\mp\zombieland\monitor::weaponMonitor();
     self thread scripts\mp\zombieland\monitor::hudMonitor();
     self thread scripts\mp\zombieland\monitor::teamMonitor();
-    // self thread scripts\mp\zombieland\monitor::customTeamMonitor(); // TODO: implement customTeamMonitor()
+    self thread scripts\mp\zombieland\monitor::customTeamMonitor();
     // self thread scripts\mp\zombieland\monitor::damageMonitor(); // TODO: implement damageMonitor()
     
     self thread scripts\mp\zombieland\zombies::zombiesuicide();

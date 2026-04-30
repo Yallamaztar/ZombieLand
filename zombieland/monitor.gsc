@@ -152,6 +152,32 @@ teamMonitor() {
     }
 }
 
+customTeamMonitor() {
+	self endon("disconnect");
+	for(;;) {
+        self waittill("joined_team");
+        
+        wait 0.1;
+        if(self.pers["team"] == "axis" && self.status == "human") {
+            self changeteam("allies");
+            self.status = "human";
+            wait 0.1;
+            self notify("menuresponse", "changeclass", "class_smg");
+        }
+
+        if(self.pers["team"] == "allies" && self.status == "zombie") {
+            self changeteam("axis");
+            self.status = "zombie";
+            wait 0.1;
+            self notify("menuresponse", "changeclass", "class_smg");
+            self thread maps\mp\gametypes\_globallogic_ui::closemenus();
+        }
+        
+        wait 0.05;
+    }
+}
+
+
 hudMonitor() {
     level endon("game_ended");
     level endon("winner_declared");
