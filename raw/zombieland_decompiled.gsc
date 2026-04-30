@@ -1,4 +1,10 @@
 //Decompiled with SeriousHD-'s GSC Decompiler
+
+/*
+ * Zombieland made by Cooljay Decompiled (v2.1)
+ * https://cabconmodding.com/threads/zombieland-by-cooljay-black-ops-ii-gamemode-update-8.6947/
+ */
+
 #include maps/mp/gametypes/_globallogic_score;
 #include maps/mp/gametypes/_globallogic_utils;
 #include maps/mp/gametypes/_gamelogic;
