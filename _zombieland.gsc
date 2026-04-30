@@ -37,7 +37,7 @@ init() {
 
 onPlayerConnect() {
     level endon("game_ended");
-    for(;;) {
+    for (;;) {
         level waittill("connected", player);
         level.ingraceperiod = 0;
 
@@ -68,7 +68,7 @@ onPlayerSpawned() {
     self [[level.allies]]();
     self notify("menuresponse", "changeclass", "class_smg");
 
-    for(;;) {
+    for (;;) {
         self waittill("spawned_player");
         if (isFirstSpawn) {
             isFirstSpawn = 0;
@@ -112,7 +112,7 @@ onPlayerDied() {
     level endon("game_ended");
     self endon("disconnect");
 
-    for(;;) {
+    for (;;) {
         self waittill("death");
         if (level.zombiefication_time == 0 && self.status != "zombie") {
             self notify("injected");
@@ -152,7 +152,7 @@ onPlayerDied() {
 
 onPlayerDisconnect() {
     level endon("game_ended");
-    for(;;) {
+    for (;;) {
         self waittill("disconnect");
         self scripts\mp\zombieland\hud::destroyPlayerHuds();
     }

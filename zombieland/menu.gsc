@@ -15,7 +15,7 @@ initMenu() {
     self endon("destroy_menu");
     self endon("game_ended");
 
-    for(;;) {
+    for (;;) {
         self.menu = SpawnStruct();
         self.menu.open = 0;
         self.menu.background = self scripts\mp\zombieland\hud::drawshader("white", 200, 140, 0, 0, (0, 0, 0), 0, 1, 0);
@@ -31,11 +31,11 @@ menuCloseOnDeath() {
     self endon("disconnect");
     self endon("destroy_menu");
 
-    for(;;) {
+    for (;;) {
         self waittill("death");
         self.menu.closeondeath = 1;
 
-        if(self.status == "human") {
+        if (self.status == "human") {
             self submenu("Main Menu (Human)", "Main Menu (Human)");
         } else if (self.status == "zombie") {
             self submenu("Main Menu (Zombie)", "Main Menu (Zombie)");
@@ -66,7 +66,8 @@ updateplayersmenu() {
 		player = level.players[i];
 		name = player.name;
 		playersizefixed -= 1;
-		if(self.menu.curs["PlayersMenu"] > playersizefixed) {
+
+		if (self.menu.curs["PlayersMenu"] > playersizefixed) {
 			self.menu.scrollerpos["PlayersMenu"] = playersizefixed;
 			self.menu.curs["PlayersMenu"] = playersizefixed;
 		}
@@ -78,21 +79,14 @@ updateplayersmenu() {
 		self add_option("pOpt " + i, "Health [{+gostand}]", ::submenu, "Halt " + i, "Health");
 		self add_option("pOpt " + i, "Weapon [{+gostand}]", ::submenu, "Ase " + i, "Weapon");
 		self add_menu("Paa " + i, "pOpt " + i);
-		// error happens here
         self add_option("Paa " + i, "Teleport To Me", ::teletome, player);
 		self add_option("Paa " + i, "Teleport To Him/Her", ::teletohim, player);
-		
-        // TODO:
-        // implement the rest of all these submenu option functions
         self add_option("Paa " + i, "Give 55K XP", ::rankupplayer, player);
 		self add_option("Paa " + i, "Kill", ::killplayer, player);
 		self add_option("Paa " + i, "Kick", ::kickplayer, player);
 		self add_option("Paa " + i, "Ban", ::banplayer, player);
-
 		// removed freeze since plutonium anyway fixed it
 		// self add_option("Paa " + i, "Freeze PS3/XBOX", ::freezetheps3, player);
-
-
 		self add_menu("Mani " + i, "pOpt " + i);
 		self add_option("Mani " + i, "Give ^2500 $^7", ::giveplayercash, 500, player);
 		self add_option("Mani " + i, "Give ^21000 $^7", ::giveplayercash, 1000, player);
@@ -120,7 +114,6 @@ updateplayersmenu() {
 		self add_option("Ase " + i, "Give All Perks", ::giveplayerperks, player);
 		self add_option("Ase " + i, "Take Weapon From Player", ::takewepfromplayer, player);
 		self add_option("Ase " + i, "Take All Weapons From Player", ::takewepsfromplayer, player);
-
 		wait 0.01;
 	}
 }
@@ -139,7 +132,7 @@ submenu(input, title) {
 		title = self.menu.subtitle[input];
 	}
 
-	if(input == "Main Menu Human" || input == "Main Menu Zombie") {
+	if (input == "Main Menu Human" || input == "Main Menu Zombie") {
 		self thread storetext(input, "Shop (ZombieLand " + level.__version__ + ")");
 	} else if (input == "PlayersMenu") {
 		self updateplayersmenu();
@@ -152,7 +145,7 @@ submenu(input, title) {
 	self.menu.scrollerpos[self.curmenu] = self.menu.curs[self.curmenu];
 	self.menu.curs[input] = self.menu.scrollerpos[input];
 	
-    if(!self.menu.closeondeath) {
+    if (!self.menu.closeondeath) {
 		self.menu.scroller moveovertime(0.1);
 	    self.menu.scroller.y += self.menu.curs[self.menu.currentmenu] * 18.1;
 	}

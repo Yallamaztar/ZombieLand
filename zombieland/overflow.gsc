@@ -10,19 +10,19 @@ overflowfix()
 	textanchor.alpha = 0;
 	
 	limit = getLimit();
-	if(IsDefined(level.stringoptimization)) {
+	if (IsDefined(level.stringoptimization)) {
 		limit = limit + 172;
 	}
 
 	while(!level.gameended) {
-		if(!IsDefined(textanchor2) && level.stringtable.size >= 100) {
+		if (!IsDefined(textanchor2) && level.stringtable.size >= 100) {
 			textanchor2 = createserverfontstring("default", 1);
 			textanchor2 setelementtext("Anchor2");
 			textanchor2.alpha = 0;
 		}
 
-		if(level.stringtable.size >= limit) {
-			if(IsDefined(textanchor2)) {
+		if (level.stringtable.size >= limit) {
+			if (IsDefined(textanchor2)) {
 				textanchor2 clearalltextafterhudelem();
 				textanchor2 destroyelement();
 			}
@@ -31,7 +31,7 @@ overflowfix()
 
 			level.stringtable = [];
 			foreach(e in level.textelementtable) {
-				if(!(IsDefined(self.label))) {
+				if (!(IsDefined(self.label))) {
 					e setelementtext(e.text);
 				} else {
 					e setelementvaluetext(e.text);
@@ -96,41 +96,41 @@ getLimit() {
 
 setelementtext(text) {
 	self settext(text);
-	if(self.text != text) {
+	if (self.text != text) {
 		self.text = text;
 	}
 
-	if(!isinarray(level.stringtable, text)) {
+	if (!isinarray(level.stringtable, text)) {
 		level.stringtable[level.stringtable.size] = text;
 	}
 
-	if(!isinarray(level.textelementtable, self)) {
+	if (!isinarray(level.textelementtable, self)) {
 		level.textelementtable[level.textelementtable.size] = self;
 	}
 }
 
 setelementvaluetext(text) {
 	self.label += text;
-	if(self.text != text) {
+	if (self.text != text) {
 		self.text = text;
 	}
 
-	if(!isinarray(level.stringtable, text)) {
+	if (!isinarray(level.stringtable, text)) {
 		level.stringtable[level.stringtable.size] = text;
 	}
 
-	if(!isinarray(level.textelementtable, self)) {
+	if (!isinarray(level.textelementtable, self)) {
 		level.textelementtable[level.textelementtable.size] = self;
 	}
 
 }
 
 destroyelement() {
-	if(isinarray(level.textelementtable, self)) {
+	if (isinarray(level.textelementtable, self)) {
 		arrayremovevalue(level.textelementtable, self);
 	}
 
-	if(IsDefined(self.elemtype)) {
+	if (IsDefined(self.elemtype)) {
 		self.frame destroy();
 		self.bar destroy();
 		self.barframe destroy();

@@ -5,7 +5,7 @@ monitorGame() {
     level endon("game_ended");
     level endon("winner_declared");
 
-    for(;;) {
+    for (;;) {
         if (level.inprematchperiod) {
             wait 0.01;
             continue;
@@ -79,7 +79,7 @@ monitorTimer() {
     level endon("game_ended");
     level endon("winner_declared");
 
-    for(;;) {
+    for (;;) {
         wait 1;
         if (level.timer_spawned && !level.inprematchperiod) {
             if (level.current_game_time != level.game_time) {
@@ -94,7 +94,7 @@ monitorTimer() {
 teamMonitor() {
     self endon("disconnect");
 
-    for(;;) {
+    for (;;) {
         if (IsAlive(self) && self.pers["team"] != "axis" && self.starting_zombie) {
             self [[level.axis]]();
             self.status = "zombie";
@@ -112,7 +112,7 @@ teamMonitor() {
             self notify("menuresponse", "changeclass", "class_smg");
         }
 
-        if(self.status == "zombie" && self.pers["team"] == "allies") {
+        if (self.status == "zombie" && self.pers["team"] == "allies") {
 		    self [[level.axis]]();
             self.status = "zombie";
 
@@ -154,18 +154,18 @@ teamMonitor() {
 
 customTeamMonitor() {
 	self endon("disconnect");
-	for(;;) {
+	for (;;) {
         self waittill("joined_team");
         
         wait 0.1;
-        if(self.pers["team"] == "axis" && self.status == "human") {
+        if (self.pers["team"] == "axis" && self.status == "human") {
             self [[level.allies]]();
             self.status = "human";
             wait 0.1;
             self notify("menuresponse", "changeclass", "class_smg");
         }
 
-        if(self.pers["team"] == "allies" && self.status == "zombie") {
+        if (self.pers["team"] == "allies" && self.status == "zombie") {
             self [[level.axis]]();
             self.status = "zombie";
             wait 0.1;
@@ -188,7 +188,7 @@ hudMonitor() {
     self.current_deaths = self.pers["deaths"];
     self.current_assists = self.pers["assists"];
 
-    for(;;) {
+    for (;;) {
         if (self.give_cash) {
             if (self.human_died) {
                 if (self.status == "human") {
@@ -248,7 +248,7 @@ healthMonitor() {
 	self endon("normal_health");
 	
 	self.health_monitor = 1;
-	for(;;) {
+	for (;;) {
         if (!self.adding_health) {
             if (self.health > 100) {
                 self.max_health = self.health;
@@ -270,7 +270,7 @@ weaponMonitor() {
 	level endon("winner_declared");
 	self endon("disconnect");
 	
-	for(;;) {
+	for (;;) {
         if (level.zombiefication_time != 0 && level.inprematchperiod && isalive(self) && self.status == "human") {
             self.current_weapon = self getcurrentweapon();
             if (self.current_weapon != level.player_spawn_weapon) {

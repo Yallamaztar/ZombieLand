@@ -3,7 +3,7 @@ wait_network_frame() {
 }
 
 spawnbots() {
-	if(!level.botshavebeenspawned) {
+	if (!level.botshavebeenspawned) {
         for (i=0; i < level.amountofbotstospawn; i++) {
 			spawnbot();
 			wait 0.075;

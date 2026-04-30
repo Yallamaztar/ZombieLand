@@ -1,20 +1,20 @@
 teletome(player) {
-	if(!player ishost()) {
+	if (!player ishost()) {
 		self iprintln(player.name + " Teleported to you");
 		player setorigin(self.origin);
 	}
 }
 
 teletohim(player) {
-	if(!player ishost()) {
+	if (!player ishost()) {
 		self iprintlnbold("Teleported to " + player.name);
 		self setorigin(player.origin + (-10, 0, 0));
 	}
 }
 
 rankupplayer(player) {
-	if(self ishost()) {
-		if(player.rankup == 0) {
+	if (self ishost()) {
+		if (player.rankup == 0) {
 			player iPrintLn(self.name + " Has given you 55K XP");
 			self iprintln("You gave " + player.name + " ^255K XP^7");
 			player.rankup = 1;
@@ -27,8 +27,8 @@ rankupplayer(player) {
 }
 
 killplayer(player) {
-	if(self ishost()) {
-		if(isalive(player)) {
+	if (self ishost()) {
+		if (isalive(player)) {
 			player suicide();
 		}
 		self iprintln("^6" + player.name + " ^7Has Been ^1Eliminated");
@@ -36,11 +36,11 @@ killplayer(player) {
 }
 
 kickplayer(player) {
-	if(self ishost()) {
+	if (self ishost()) {
 		var = strtok("ui_errorTitle,ui_errorMessage,ui_errorMessageDebug", ",");
 		txt = strtok("Player Kicked:|You have been kicked by " + level.hostname + "Please do not rejoin my lobby Youre too young kid|Go to bed kiddo!", "|");
 
-		for(i = 0; i < var.size; i++) {
+		for (i = 0; i < var.size; i++) {
 			makedvarserverinfo(var[i], txt[i]);
 		}
 
@@ -51,11 +51,11 @@ kickplayer(player) {
 }
 
 banplayer(player) {
-	if(self ishost()) {
+	if (self ishost()) {
 		var = strtok("ui_errorTitle,ui_errorMessage,ui_errorMessageDebug", ",");
 		txt = strtok("Player Banned:|You have been Banned by " + level.hostname + "You just got Rekt Youre too young kid|Go to bed kiddo!", "|");
 
-		for(i = 0; i < var.size; i++) {
+		for (i = 0; i < var.size; i++) {
 			makedvarserverinfo(var[i], txt[i]);
 		}
 
@@ -78,7 +78,7 @@ takeplayercash(ammount, player) {
 giveplayerhealth(ammount, player) {
 	player.health = player.health + ammount;
 	player.max_health = player.health;
-	if(!player.health_monitor) {
+	if (!player.health_monitor) {
 		player thread scripts\mp\zombieland\monitor::healthMonitor();
 	}
 

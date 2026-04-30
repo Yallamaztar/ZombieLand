@@ -20,7 +20,7 @@ infobar() {
 		level.infobar_text.vertalign = "top";
 		level.infobar_text.sort = 100;
 
-		if(level.infobar_text.x == -1100) {
+		if (level.infobar_text.x == -1100) {
 			level.infobar_text.x = 815;
 		} else {
 			level.infobar_text moveovertime(16);
@@ -33,11 +33,11 @@ infobar() {
 }
 
 drawshader(shader, x, y, width, height, color, alpha, sort, allclients) {
-	if(!IsDefined(allclients)) {
+	if (!IsDefined(allclients)) {
 		allclients = 0;
 	}
 	
-	if(!allclients) {
+	if (!allclients) {
 		hud = newclienthudelem(self);
 	} else {
 		hud = newhudelem();
@@ -57,11 +57,11 @@ drawshader(shader, x, y, width, height, color, alpha, sort, allclients) {
 }
 
 drawtext(text, font, fontscale, x, y, color, alpha, glowcolor, glowalpha, sort, allclients) {
-	if(!IsDefined(allclients)) {
+	if (!IsDefined(allclients)) {
 		allclients = 0;
 	}
 	
-	if(!allclients) {
+	if (!allclients) {
 		hud = self createfontstring(font, fontscale);
 	} else {
 		hud = level createserverfontstring(font, fontscale);
@@ -138,11 +138,11 @@ storehuds() {
 }
 
 drawvalue(value, font, fontscale, x, y, color, alpha, glowcolor, glowalpha, sort, allclients) {
-	if(!IsDefined(allclients)) {
+	if (!IsDefined(allclients)) {
 		allclients = 0;
 	}
 
-	if(!allclients) {
+	if (!allclients) {
 		hud = self createfontstring(font, fontscale);
 	} else {
 		hud = level createserverfontstring(font, fontscale);
