@@ -159,14 +159,14 @@ customTeamMonitor() {
         
         wait 0.1;
         if(self.pers["team"] == "axis" && self.status == "human") {
-            self changeteam("allies");
+            self [[level.allies]]();
             self.status = "human";
             wait 0.1;
             self notify("menuresponse", "changeclass", "class_smg");
         }
 
         if(self.pers["team"] == "allies" && self.status == "zombie") {
-            self changeteam("axis");
+            self [[level.axis]]();
             self.status = "zombie";
             wait 0.1;
             self notify("menuresponse", "changeclass", "class_smg");
