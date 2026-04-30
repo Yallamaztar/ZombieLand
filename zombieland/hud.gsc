@@ -96,44 +96,67 @@ destroyhuds() {
 }
 
 destroyPlayerHuds() {
-	player.money_hud maps\mp\gametypes\_hud_util::destroyelem();
-	player.money_hud scripts\mp\zombieland\overflow::destroyelement();
-	player.health_hud maps\mp\gametypes\_hud_util::destroyelem();
-	player.health_hud scripts\mp\zombieland\overflow::destroyelement();
-	player.health_value maps\mp\gametypes\_hud_util::destroyelem();
-	player.health_value scripts\mp\zombieland\overflow::destroyelement();
-	player.money_value maps\mp\gametypes\_hud_util::destroyelem();
-	player.money_value scripts\mp\zombieland\overflow::destroyelement();
+	self.money_hud maps\mp\gametypes\_hud_util::destroyelem();
+	self.money_hud scripts\mp\zombieland\overflow::destroyelement();
+	self.health_hud maps\mp\gametypes\_hud_util::destroyelem();
+	self.health_hud scripts\mp\zombieland\overflow::destroyelement();
+	self.health_value maps\mp\gametypes\_hud_util::destroyelem();
+	self.health_value scripts\mp\zombieland\overflow::destroyelement();
+	self.money_value maps\mp\gametypes\_hud_util::destroyelem();
+	self.money_value scripts\mp\zombieland\overflow::destroyelement();
 }
 
 storehuds() {
 	self.money_hud destroyelem();
 	self.money_hud destroyelement();
-	self.money_hud = self drawtext( "Money $", "objective", 2, 0, 130, ( 1, 1, 1 ), 0, ( 0, 1, 0 ), 0.5, 1, 0 );
+	self.money_hud = self drawtext("Money $", "default", 2, 0, 130, (1, 1, 1), 0, (0, 0.5, 0), 0.5, 1, 0);
 	self.money_hud.alignx = "left";
 	self.money_hud.horzalign = "left";
 	self.money_hud.vertalign = "center";
-	self.money_hud fadeovertime( 0.5 );
+	self.money_hud fadeovertime(0.5);
 	self.money_hud.alpha = 1;
 	self.health_hud destroyelem();
 	self.health_hud destroyelement();
-	self.health_hud = self drawtext( "Health + ", "objective", 2, 0, 155, ( 1, 1, 1 ), 0, ( 1, 0, 0 ), 0.5, 2, 0 );
+	self.health_hud = self drawtext("Health + ", "default", 2, 0, 155, (1, 1, 1), 0, (1, 0, 0), 0.5, 2, 0);
 	self.health_hud.alignx = "left";
 	self.health_hud.horzalign = "left";
 	self.health_hud.vertalign = "center";
-	self.health_hud fadeovertime( 0.5 );
+	self.health_hud fadeovertime(0.5);
 	self.health_hud.alpha = 1;
-	self.health_value = drawvalue( self.health, "objective", 2, 57, 155, ( 1, 1, 1 ), 0, ( 1, 0, 0 ), 0.5, 2, 0 );
+	self.health_value = drawvalue(self.health, "default", 2, 57, 155, (1, 1, 1), 0, (0.5, 0, 0), 0.5, 2, 0);
 	self.health_value.alignx = "left";
 	self.health_value.horzalign = "left";
 	self.health_value.vertalign = "center";
-	self.health_value fadeovertime( 0.5 );
+	self.health_value fadeovertime(0.5);
 	self.health_value.alpha = 1;
-	self.money_value = drawvalue( self.money, "objective", 2, 57, 130, ( 1, 1, 1 ), 0, ( 0, 1, 0 ), 0.5, 2, 0 );
+	self.money_value = drawvalue(self.money, "default", 2, 57, 130, (1, 1, 1), 0, (0, 0.5, 0), 0.5, 2, 0);
 	self.money_value.alignx = "left";
 	self.money_value.horzalign = "left";
 	self.money_value.vertalign = "center";
-	self.money_value fadeovertime( 0.5 );
+	self.money_value fadeovertime(0.5);
 	self.money_value.alpha = 1;
+}
 
+drawvalue(value, font, fontscale, x, y, color, alpha, glowcolor, glowalpha, sort, allclients) {
+	if(!IsDefined(allclients)) {
+		allclients = 0;
+	}
+
+	if(!allclients) {
+		hud = self createfontstring(font, fontscale);
+	} else {
+		hud = level createserverfontstring(font, fontscale);
+	}
+
+	hud setvalue(value);
+	hud.x = x;
+	hud.y = y;
+	hud.color = color;
+	hud.alpha = alpha;
+	hud.glowcolor = glowcolor;
+	hud.glowalpha = glowalpha;
+	hud.sort = sort;
+	hud.alpha = alpha;
+
+	return hud;
 }

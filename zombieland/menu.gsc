@@ -84,47 +84,53 @@ updateplayersmenu() {
 		
         // TODO:
         // implement the rest of all these submenu option functions
-        // self add_option("Paa " + i, "Give 55K XP", ::rankupplayer, player);
-		// self add_option("Paa " + i, "Kill", ::killplayer, player);
-		// self add_option("Paa " + i, "Kick", ::kickplayer, player);
-		// self add_option("Paa " + i, "Ban", ::banplayer, player);
-		// self add_option("Paa " + i, "Freeze PS3/XBOX", ::freezetheps3, player);
-		// self add_menu("Mani " + i, "pOpt " + i);
-		// self add_option("Mani " + i, "Give ^2500 $^7", ::giveplayercash, 500, player);
-		// self add_option("Mani " + i, "Give ^21000 $^7", ::giveplayercash, 1000, player);
-		// self add_option("Mani " + i, "Give ^22500 $^7", ::giveplayercash, 2500, player);
-		// self add_option("Mani " + i, "Give ^25000 $^7", ::giveplayercash, 5000, player);
-		// self add_option("Mani " + i, "Take ^2-500 $^7", ::takeplayercash, 500, player);
-		// self add_option("Mani " + i, "Take ^2-1000 $^7", ::takeplayercash, 1000, player);
-		// self add_option("Mani " + i, "Take ^2-2500 $^7", ::takeplayercash, 2500, player);
-		// self add_option("Mani " + i, "Take ^2-5000 $^7", ::takeplayercash, 5000, player);
-		// self add_menu("Halt " + i, "pOpt " + i);
-		// self add_option("Halt " + i, "Give ^1500 Health^7", ::giveplayerhealth, 500, player);
-		// self add_option("Halt " + i, "Give ^11000 Health^7", ::giveplayerhealth, 1000, player);
-		// self add_option("Halt " + i, "Give ^12500 Health^7", ::giveplayerhealth, 2500, player);
-		// self add_option("Halt " + i, "Give ^15000 Health^7", ::giveplayerhealth, 5000, player);
-		// self add_option("Halt " + i, "Take ^1-500 Health^7", ::takeplayerhealth, 500, player);
-		// self add_option("Halt " + i, "Take ^1-1000 Health^7", ::takeplayerhealth, 1000, player);
-		// self add_option("Halt " + i, "Take ^1-2500 Health^7", ::takeplayerhealth, 2500, player);
-		// self add_option("Halt " + i, "Take ^1-5000 Health^7", ::takeplayerhealth, 5000, player);
-		// self add_menu("Ase " + i, "pOpt " + i);
-		// self add_option("Ase " + i, "Give MP7", ::giveplayerswat, "mp7_mp+extclip++mms", player);
-		// self add_option("Ase " + i, "Give Vector-K10", ::giveplayerswat, "vector_mp+mms++extclip", player);
-		// self add_option("Ase " + i, "Give SCAR-H", ::giveplayerswat, "scar_mp+mms+extclip", player);
-		// self add_option("Ase " + i, "Give DSR", ::giveplayerswat, "dsr50_mp+fmj+dualclip+steadyaim", player);
-		// self add_option("Ase " + i, "Give 870-MCS", ::giveplayerswat, "870mcs_mp+steadyaim+extbarrel", player);
-		// self add_option("Ase " + i, "Give All Perks", ::giveplayerperks, player);
-		// self add_option("Ase " + i, "Take Weapon From Him/Her", ::takewepfromplayer, player);
-		// self add_option("Ase " + i, "Take All Weapons From Him/Her", ::takewepsfromplayer, player);
-	}
+        self add_option("Paa " + i, "Give 55K XP", ::rankupplayer, player);
+		self add_option("Paa " + i, "Kill", ::killplayer, player);
+		self add_option("Paa " + i, "Kick", ::kickplayer, player);
+		self add_option("Paa " + i, "Ban", ::banplayer, player);
 
+		// removed freeze since plutonium anyway fixed it
+		// self add_option("Paa " + i, "Freeze PS3/XBOX", ::freezetheps3, player);
+
+
+		self add_menu("Mani " + i, "pOpt " + i);
+		self add_option("Mani " + i, "Give ^2500 $^7", ::giveplayercash, 500, player);
+		self add_option("Mani " + i, "Give ^21000 $^7", ::giveplayercash, 1000, player);
+		self add_option("Mani " + i, "Give ^22500 $^7", ::giveplayercash, 2500, player);
+		self add_option("Mani " + i, "Give ^25000 $^7", ::giveplayercash, 5000, player);
+		self add_option("Mani " + i, "Take ^2-500 $^7", ::takeplayercash, 500, player);
+		self add_option("Mani " + i, "Take ^2-1000 $^7", ::takeplayercash, 1000, player);
+		self add_option("Mani " + i, "Take ^2-2500 $^7", ::takeplayercash, 2500, player);
+		self add_option("Mani " + i, "Take ^2-5000 $^7", ::takeplayercash, 5000, player);
+		self add_menu("Halt " + i, "pOpt " + i);
+		self add_option("Halt " + i, "Give ^1500 Health^7", ::giveplayerhealth, 500, player);
+		self add_option("Halt " + i, "Give ^11000 Health^7", ::giveplayerhealth, 1000, player);
+		self add_option("Halt " + i, "Give ^12500 Health^7", ::giveplayerhealth, 2500, player);
+		self add_option("Halt " + i, "Give ^15000 Health^7", ::giveplayerhealth, 5000, player);
+		self add_option("Halt " + i, "Take ^1-500 Health^7", ::takeplayerhealth, 500, player);
+		self add_option("Halt " + i, "Take ^1-1000 Health^7", ::takeplayerhealth, 1000, player);
+		self add_option("Halt " + i, "Take ^1-2500 Health^7", ::takeplayerhealth, 2500, player);
+		self add_option("Halt " + i, "Take ^1-5000 Health^7", ::takeplayerhealth, 5000, player);
+		self add_menu("Ase " + i, "pOpt " + i);
+		self add_option("Ase " + i, "Give MP7", ::giveplayerweapon, "mp7_mp+extclip++mms", player);
+		self add_option("Ase " + i, "Give Vector-K10", ::giveplayerweapon, "vector_mp+mms++extclip", player);
+		self add_option("Ase " + i, "Give SCAR-H", ::giveplayerweapon, "scar_mp+mms+extclip", player);
+		self add_option("Ase " + i, "Give DSR", ::giveplayerweapon, "dsr50_mp+fmj+dualclip+steadyaim", player);
+		self add_option("Ase " + i, "Give 870-MCS", ::giveplayerweapon, "870mcs_mp+steadyaim+extbarrel", player);
+		self add_option("Ase " + i, "Give All Perks", ::giveplayerperks, player);
+		self add_option("Ase " + i, "Take Weapon From Player", ::takewepfromplayer, player);
+		self add_option("Ase " + i, "Take All Weapons From Player", ::takewepsfromplayer, player);
+
+		wait 0.01;
+	}
 }
 
 verificationtocolor(status) {
 	if (status == "zombie") {
-        return "^1"
+        return "^1";
     }
-    return "^6"
+
+    return "^6";
 }
 
 submenu(input, title) {
@@ -185,20 +191,18 @@ storeshaders() {
 
 }
 
-storetext(menu, title)
-{
+storetext(menu, title) {
 	self.menu.currentmenu = menu;
 	string = "";
 	self.menu.title destroyelement();
 	self.menu.title = drawtext(title, "objective", 2, 200, 110, (1, 1, 1), 0, (255, 0, 0), 0, 3, 0);
 	self.menu.title fadeovertime(0.3);
 	self.menu.title.alpha = 1;
-	i = 0;
-	while(i < self.menu.menuopt[ menu].size)
-	{
-		string = string + (self.menu.menuopt[ menu][ i] + "");
-		i++;
+
+	for (i=0; i<self.menu.menuopt[menu].size; i++) {
+		string = string + self.menu.menuopt[menu][i] + "";
 	}
+
 	self.menu.options scripts\mp\zombieland\overflow::destroyelement();
 	self.menu.options = drawtext(string, "objective", 1.5, 200, 160, (1, 1, 1), 0, (0, 0, 0), 0, 4);
 	self.menu.options fadeovertime(0.3);

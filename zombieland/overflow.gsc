@@ -38,7 +38,7 @@ overflowfix()
 				}
 			}
 		}
-		wait 0.01;
+		wait 0.05;
 	}
 
 }
