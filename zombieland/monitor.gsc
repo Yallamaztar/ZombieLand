@@ -1,4 +1,5 @@
 #include scripts\mp\zombieland\utils;
+#include scripts\mp\zombieland\players;
 
 monitorGame() {
     level endon("game_ended");
@@ -31,7 +32,7 @@ monitorGame() {
 
         if (!level.zombiefication_in_progress && level.zombiefication_time == 0) {
             level.zombiefication_in_progress = 1;
-            zombie = scripts\mp\zombieland\players::randomPlayer();
+            zombie = randomPlayer();
             zombie Suicide();
             zombie.status = "zombie";
             level.zombie_count += 1;
@@ -99,7 +100,7 @@ teamMonitor() {
             self.status = "zombie";
 
             wait_network_frame();
-            self notify( "menuresponse", "changeclass", "class_smg" );
+            self notify("menuresponse", "changeclass", "class_smg");
             self.starting_zombie = 0;
         }
 
@@ -146,6 +147,8 @@ teamMonitor() {
                 self notify("menuresponse", "changeclass", "class_smg");
             }
         }
+
+        wait 0.05;
     }
 }
 
@@ -194,8 +197,8 @@ hudMonitor() {
             if (self.status == "zombie" && self.current_deaths != self.pers["deaths"]) {
                 self.money += self.money + level.money_per_death_zombie * self.money_multiplier;
                 self.current_deaths = self.pers["deaths"];
-                self scripts\mp\zombieland\players::resetPerks();
-                self show;
+                self thread resetPerks();
+                self Show();
                 self notify("stop_linking_model");
                 self.link_model Delete();
             }
@@ -209,5 +212,29 @@ hudMonitor() {
         self.health_value SetValue(self.health);
         self.money_value SetValue(self.money);
         wait 0.05;
+    }
+}
+
+healthMonitor() {
+    level endon("game_ended");
+	self endon("disconnect");
+	self endon("infected");
+	self endon("normal_health");
+	
+	self.health_monitor = 1;
+	for(;;) {
+        if(!self.adding_health) {
+            if(self.health > 100) {
+                self.max_health = self.health;
+            }
+        }
+
+        if(self.health < 100) {
+            self.max_health = 100;
+            self.health_monitor = 0;
+            self notify("normal_health");
+        }
+
+        wait 0.01;
     }
 }

@@ -1,15 +1,15 @@
 /*
  * Zombieland (Modernized)
- * Custom zombies-style gamemode for T6MP
+ * Custom zombies-style gamemode for Plutonium T6MP
  * Revised by @Yallamaztar | Originally made by @CoolJay
  */
 
 main() {
-    level.__version__  = "0.1.2";
+    level.__version__  = "0.1.3";
     
     SetGametypeSetting("prematchperiod", 5);    
     SetGametypeSetting("preroundperiod", 5);
-    SetMatchTalkingFlag( "EveryoneHearsEveryone", 1 );
+    SetMatchTalkFlag("EveryoneHearsEveryone", 1);
 
     // set to your discord invite link
     SetDvar("ui_discord_url", "https://discord.gg/^6zombieland^7");
@@ -18,10 +18,11 @@ main() {
 }
 
 init() {
-    if (GetDvar("g_gametype" != "tdm")) {
-        PrintLn("[Zombieland] (^1^1error^7): This gamemode is only available in TDM");
-        return;
-    }
+    // doesnt work? lmao  
+    // if (GetDvar("g_gametype" != "tdm")) {
+    //     PrintLn("[Zombieland] (^1^1error^7): This gamemode is only available in TDM");
+    //     return;
+    // }
 
     level scripts\mp\zombieland\options::initOptions();
     level scripts\mp\zombieland\options::initItemPrices();
@@ -40,20 +41,8 @@ onPlayerConnect() {
         level waittill("connected", player);
         level.ingraceperiod = 0;
 
-        player.status = 0;
-        player.human_died = 0;
-        player.threads_ready = 0;
-        player.starting_zombie = 0;
-        player.menu_init = 0;
-        player.give_cash = 1;
-        player.money = 50;
-        player.health = 100;
-        player.money_multiplier = 1;
-
-        // TODO:
-        // idk if i finished this yet, check later
+        player scripts\mp\zombieland\players::resetStats();
         player scripts\mp\zombieland\menu::createMenu();
-        
         player thread onPlayerSpawned();
         player thread onPlayerDied();
     }
@@ -67,15 +56,13 @@ onPlayerSpawned() {
     self.health_monitor = 0;
     self.threads_readay = 1;
 
-    self thread scripts\mp\zombieland\monitor::weaponMonitor(); // TODO: implement weaponMonitor()
+    // self thread scripts\mp\zombieland\monitor::weaponMonitor(); // TODO: implement weaponMonitor()
     self thread scripts\mp\zombieland\monitor::hudMonitor();
     self thread scripts\mp\zombieland\monitor::teamMonitor();
-    self thread scripts\mp\zombieland\monitor::customTeamMonitor(); // TODO: implement customTeamMonitor()
-    self thread scripts\mp\zombieland\monitor::damageMonitor(); // TODO: implement damageMonitor()
+    // self thread scripts\mp\zombieland\monitor::customTeamMonitor(); // TODO: implement customTeamMonitor()
+    // self thread scripts\mp\zombieland\monitor::damageMonitor(); // TODO: implement damageMonitor()
     
-    // TODO:
-    // create these too
-    self thread zombiesuicide();
+    self thread scripts\mp\zombieland\zombies::zombiesuicide();
     self setupTeamDvars();
 
     self [[level.allies]]();
@@ -95,7 +82,7 @@ onPlayerSpawned() {
         if (level.use_custom_maps && !isdefined(level.custom_map_ready)) {
             // TODO:
             // create this function
-            level thread setupCustomMap();
+            // level thread setupCustomMap();
 
             level.custom_map_ready = 1;
             self scripts\mp\zombieland\players::resetPerks();
@@ -143,8 +130,8 @@ onPlayerDied() {
             
             // TODO:
             // create the menu() function
-            self thread scripts\mp\zombieland\menu::menu();
-            level thread maps\mp\gametypes\_globallogic_ui::closemenus()
+            // self thread scripts\mp\zombieland\menu::menu();
+            level thread maps\mp\gametypes\_globallogic_ui::closemenus();
         }
 
         if (self.suicide) {
@@ -208,4 +195,24 @@ giveWeapons(status) {
 		self setperk("specialty_unlimitedsprint");
 		self setperk("specialty_quieter");
     }
+}
+
+setupteamdvars() {
+	if (level.spawn_bots != 0) {
+		self thread scripts\mp\zombieland\utils::spawnbots();
+	}
+
+	level.teamlimit = 18;
+	level.teambalance = 0;
+	level.disableweapondrop = 1;
+	level.allow_teamchange = 0;
+
+	setdvar( "scr_disable_weapondrop", 1 );
+	setdvar( "scr_teambalance", 0 );
+	setdvar( "party_autoteams", 0 );
+	setdvar( "ui_allow_teamchange", "0" );
+	setdvar( "g_TeamName_Allies", "Humans" );
+	setdvar( "g_TeamName_Axis", "Zombies" );
+	setdvar( "g_customTeamName_Allies", "Humans" );
+	setdvar( "g_customTeamName_Axis", "Zombies" );
 }

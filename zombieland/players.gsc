@@ -9,6 +9,8 @@ cleanName() {
         if (self.name[i] == "]") {
             break;
         }
+
+        wait 0.01;
     }
 
     if (self.name.size != i) {
@@ -46,4 +48,16 @@ resetPerks() {
     self.metallo = 0;
     self.terrorista = 0;
     self.doge = 0;
+}
+
+resetStats() {
+    self.status = 0;
+    self.human_died = 0;
+    self.threads_ready = 0;
+    self.starting_zombie = 0;
+    self.menu_init = 0;
+    self.give_cash = 1;
+    self.money = 50;
+    self.health = 100;
+    self.money_multiplier = 1;
 }
