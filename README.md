@@ -4,6 +4,14 @@ This is a revised version of the classic [Zombieland gamemode](https://cabconmod
 
 You can view the original decompiled Zombieland script [here](raw/zombieland_decompiled.gsc)
 
+## Installation
+1. clone the repository
+```sh
+git clone https://github.com/Yallamaztar/ZombieLand.git
+```
+
+2. drop the **_zombieland.gsc** and **zombieland/** directory to your **`t6/scripts/mp`** directory
+
 ## Notes
 - **Some parts of the original code are reused here**
 - Contributions or suggestions are welcome
