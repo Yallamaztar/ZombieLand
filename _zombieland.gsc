@@ -5,7 +5,7 @@
  */
 
 main() {
-    level.__version__  = "0.1.3";
+    level.__version__  = "0.1.4";
     
     SetGametypeSetting("prematchperiod", 5);    
     SetGametypeSetting("preroundperiod", 5);
@@ -31,6 +31,7 @@ init() {
     level thread scripts\mp\zombieland\hud::infobar();
     level thread scripts\mp\zombieland\monitor::monitorGame();
     level thread scripts\mp\zombieland\monitor::monitorTimer();
+    level thread scripts\mp\zombieland\zombies::zombieCountdown();
 
     level thread onPlayerConnect();
 }
@@ -60,7 +61,7 @@ onPlayerSpawned() {
     self thread scripts\mp\zombieland\monitor::hudMonitor();
     self thread scripts\mp\zombieland\monitor::teamMonitor();
     self thread scripts\mp\zombieland\monitor::customTeamMonitor();
-    // self thread scripts\mp\zombieland\monitor::damageMonitor(); // TODO: implement damageMonitor()
+    self thread scripts\mp\zombieland\monitor::damageMonitor(); // TODO: implement damageMonitor()
     
     self thread scripts\mp\zombieland\zombies::zombiesuicide();
     self setupTeamDvars();
@@ -70,6 +71,8 @@ onPlayerSpawned() {
 
     for (;;) {
         self waittill("spawned_player");
+        self.give_cash = 1;
+        
         if (isFirstSpawn) {
             isFirstSpawn = 0;
             if (self ishost()) {
@@ -163,7 +166,6 @@ resetdvars() {
 	self.infinite_ammo = undefined;
 	self.uav = undefined;
 	self setclientuivisibilityflag("g_compassShowEnemies", 0);
-
 }
 
 setupteamdvars() {
@@ -176,12 +178,12 @@ setupteamdvars() {
 	level.disableweapondrop = 1;
 	level.allow_teamchange = 0;
 
-	setdvar( "scr_disable_weapondrop", 1 );
-	setdvar( "scr_teambalance", 0 );
-	setdvar( "party_autoteams", 0 );
-	setdvar( "ui_allow_teamchange", "0" );
-	setdvar( "g_TeamName_Allies", "Humans" );
-	setdvar( "g_TeamName_Axis", "Zombies" );
-	setdvar( "g_customTeamName_Allies", "Humans" );
-	setdvar( "g_customTeamName_Axis", "Zombies" );
+	setdvar("scr_disable_weapondrop", 1);
+	setdvar("scr_teambalance", 0);
+	setdvar("party_autoteams", 0);
+	setdvar("ui_allow_teamchange", "0");
+	setdvar("g_TeamName_Allies", "Humans");
+	setdvar("g_TeamName_Axis", "Zombies");
+	setdvar("g_customTeamName_Allies", "Humans");
+	setdvar("g_customTeamName_Axis", "Zombies");
 }
