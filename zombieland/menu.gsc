@@ -128,7 +128,7 @@ verificationtocolor(status) {
 
 submenu(input, title) {
 	self.menu.options scripts\mp\zombieland\overflow::destroyelement();
-	if (!IsDefined(title)) {
+	if (!isdefined(title)) {
 		title = self.menu.subtitle[input];
 	}
 

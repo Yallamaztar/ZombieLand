@@ -21,7 +21,7 @@ cleanName() {
 }
 
 setForEveryone(key, value) {
-    foreach(player in level.players) {
+    foreach (player in level.players) {
         player.key = value;
     }
 }

@@ -10,19 +10,19 @@ overflowfix()
 	textanchor.alpha = 0;
 	
 	limit = getLimit();
-	if (IsDefined(level.stringoptimization)) {
+	if (isdefined(level.stringoptimization)) {
 		limit = limit + 172;
 	}
 
 	while(!level.gameended) {
-		if (!IsDefined(textanchor2) && level.stringtable.size >= 100) {
+		if (!isdefined(textanchor2) && level.stringtable.size >= 100) {
 			textanchor2 = createserverfontstring("default", 1);
 			textanchor2 setelementtext("Anchor2");
 			textanchor2.alpha = 0;
 		}
 
 		if (level.stringtable.size >= limit) {
-			if (IsDefined(textanchor2)) {
+			if (isdefined(textanchor2)) {
 				textanchor2 clearalltextafterhudelem();
 				textanchor2 destroyelement();
 			}
@@ -30,8 +30,8 @@ overflowfix()
 			textanchor clearalltextafterhudelem();
 
 			level.stringtable = [];
-			foreach(e in level.textelementtable) {
-				if (!(IsDefined(self.label))) {
+			foreach (e in level.textelementtable) {
+				if (!(isdefined(self.label))) {
 					e setelementtext(e.text);
 				} else {
 					e setelementvaluetext(e.text);
@@ -130,7 +130,7 @@ destroyelement() {
 		arrayremovevalue(level.textelementtable, self);
 	}
 
-	if (IsDefined(self.elemtype)) {
+	if (isdefined(self.elemtype)) {
 		self.frame destroy();
 		self.bar destroy();
 		self.barframe destroy();

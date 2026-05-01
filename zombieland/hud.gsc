@@ -33,7 +33,7 @@ infobar() {
 }
 
 drawshader(shader, x, y, width, height, color, alpha, sort, allclients) {
-	if (!IsDefined(allclients)) {
+	if (!isdefined(allclients)) {
 		allclients = 0;
 	}
 	
@@ -57,7 +57,7 @@ drawshader(shader, x, y, width, height, color, alpha, sort, allclients) {
 }
 
 drawtext(text, font, fontscale, x, y, color, alpha, glowcolor, glowalpha, sort, allclients) {
-	if (!IsDefined(allclients)) {
+	if (!isdefined(allclients)) {
 		allclients = 0;
 	}
 	
@@ -80,7 +80,7 @@ drawtext(text, font, fontscale, x, y, color, alpha, glowcolor, glowalpha, sort, 
 }
 
 destroyhuds() {
-	foreach(player in level.players) {
+	foreach (player in level.players) {
 		player.money_hud maps\mp\gametypes\_hud_util::destroyelem();
 		player.money_hud scripts\mp\zombieland\overflow::destroyelement();
 		player.health_hud maps\mp\gametypes\_hud_util::destroyelem();
@@ -138,7 +138,7 @@ storehuds() {
 }
 
 drawvalue(value, font, fontscale, x, y, color, alpha, glowcolor, glowalpha, sort, allclients) {
-	if (!IsDefined(allclients)) {
+	if (!isdefined(allclients)) {
 		allclients = 0;
 	}
 
