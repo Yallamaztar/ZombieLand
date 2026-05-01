@@ -276,9 +276,25 @@ weaponMonitor() {
             if (self.current_weapon != level.player_spawn_weapon) {
                 self.status = "human";
                 self scripts\mp\zombieland\utils::giveWeapons(self.status);
-                wait 1;
+                break;
             }
         }
         wait 0.05;
 	}
+}
+
+damageMonitor() {
+    level endon("game_ended");
+    self endon("disconnect");
+    for (;;) {
+        if (self.status == "zombie") {
+            self waittill("damage", damage, attacker, direction, point, type, tagname, modelname, partname, weaponname);
+            if (type == "MOD_FALLING") {
+                self.give_cash = 0;
+                self waittill("spawned_player");
+                self.give_cash = 1;
+            }
+        }
+        wait 0.01;
+    }
 }
