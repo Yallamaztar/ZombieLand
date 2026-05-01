@@ -3,12 +3,12 @@ wait_network_frame() {
 }
 
 spawnbots() {
-	if (!level.botshavebeenspawned) {
-        for (i=0; i < level.amountofbotstospawn; i++) {
+	if (!level.bots_have_been_spawned) {
+        for (i=0; i < level.amount_of_bots_to_spawn; i++) {
 			spawnbot();
 			wait 0.075;
 		}
-		level.botshavebeenspawned = 1;
+		level.bots_have_been_spawned = 1;
 	}
 }
 
@@ -44,5 +44,37 @@ giveWeapons(status) {
 		self setperk("specialty_movefaster");
 		self setperk("specialty_unlimitedsprint");
 		self setperk("specialty_quieter");
+    }
+}
+
+senderror(errortype) {
+    if (errortype == "MoreMoney") {
+        self iprintln("^1Error: ^7You Do Not Have Enough Money For This Item");
+    } else if (errortype == "InvalidWeaponAttachment") {
+        self iprintln("^1Error: ^7You Cannot Put This Attachment On This Weapon");
+    } else if (errortype == "InvalidWeapon") {
+        self iprintln("^1Error: ^7You Are Holding An Invalid Weapon");
+    } else if (errortype == "AlreadyHasWeapon") {
+        self iprintln("^1Error: ^7You Already Own This Weapon");
+    } else if (errortype == "AlreadyHasAttachment") {
+        self iprintln("^1Error: ^7You Already Have This Attachment");
+    } else if (errortype == "MaxAmmo") {
+        self iprintln("^1Error: ^7You Already Have Maximum Ammo For This Weapon");
+    } else if (errortype == "AlreadyHasUAV") {
+        self iprintln("^1Error: ^7You Already Have A UAV");
+    } else if (errortype == "MaxTurrets") {
+        self iprintln("^1Error: ^7Max Number of Turrets Reached!");
+    } else if (errortype == "AlreadyHaveEquipment") {
+        self iprintln("^1Error: ^7You Already Have This Equipment");
+    } else if (errortype == "HasPerk") {
+        self iprintln("^1Error: ^7You Already Have This Perk");
+    } else if (errortype == "AlreadyInvisible") {
+        self iprintln("^1Error: ^7You Are Already Invisible");
+    } else if (errortype == "AlreadySlowedHumans") {
+        self iprintln("^1Error: ^7Humans Have Already Been Slowed");
+    } else if (errortype == "AlreadyHasInfrared") {
+        self iprintln("^1Error: ^7You Already Have Infrared Vision");
+    } else if (errortype == "AlreadyHasInfiniteAmmo") {
+        self iprintln("^1Error: ^7You Already Have Infinite Ammo");
     }
 }
