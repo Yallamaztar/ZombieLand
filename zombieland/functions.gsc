@@ -88,7 +88,7 @@ giveplayerhealth(ammount, player) {
 
 takeplayerhealth(ammount, player) {
 	player.health = player.health - ammount;
-	player.maxhealth = player.health;
+	player.max_health = player.health;
 	if (player.healthmonitor) {
 		player thread scripts\mp\zombieland\monitor::healthMonitor();
 	}
@@ -177,4 +177,73 @@ takewepfromplayer(player) {
 takewepsfromplayer(player) {
 	self iprintln("Weapons were taken from this scrublord");
 	player takeallweapons();
+}
+
+giveuav(status) {
+	if (self.money >= level.item_price[status]["General"]["UAV"]) {
+		if (!IsDefined(self.uav)) {
+			self.uav = 1;
+			self setclientuivisibilityflag("g_compassShowEnemies", 1);
+			self.money = self.money - level.item_price[status]["General"]["UAV"];
+			self iprintln("^2UAV ^7Purchased Successfully");
+		} else {
+			self scripts\mp\zombieland\utils::senderror("AlreadyHasUAV");
+		}
+	} else {
+		self scripts\mp\zombieland\utils::senderror("MoreMoney");
+	}
+}
+
+addhealth(amount, status) {
+	if (self.money >= level.item_price[status]["General"]["Health"]) {
+		self.adding_health = 1;
+		wait 0.01;
+
+		self.health = self.health + amount;
+		self.max_health = self.health;
+		self.adding_health = 0;
+
+		if (!self.healthmonitor) {
+			self thread scripts\mp\zombieland\monitor::monitorhealth();
+		}
+
+		self.money = self.money - level.item_price[status]["General"]["Health"];
+		self iprintln("^1+100 Health ^7Purchased Successfully");
+	} else {
+		self scripts\mp\zombieland\utils::senderror("MoreMoney");
+	}
+}
+
+refillammo() {
+	self.current_weapon = self getcurrentweapon();
+	if (self.money >= level.item_price["Human"]["Weapons"]["Ammo"]) {
+		if (isvalidweapon(self.current_weapon)) {
+			self setweaponammoclip(self.current_weapon, weaponclipsize(self.current_weapon));
+			self givemaxammo( self.current_weapon );
+			self.money = self.money - level.item_price["Human"]["Weapons"]["Ammo"];
+			self iprintln( "^2Max Ammo ^7Purchased Successfully" );
+		} else {
+			self scripts\mp\zombieland\utils::senderror( "InvalidWeapon" );
+		}
+	} else {
+		self scripts\mp\zombieland\utils::senderror( "MoreMoney" );
+	}
+
+}
+
+giveinfraredvision(status) {
+	if(self.money >= level.item_price[status]["General"]["Infrared"]) {
+		if (!IsDefined(self.infrared_on))) {
+			self.infrared_on = 1;
+			self iprintln("^2Infrared Vision ^7Purchased Successfully");
+			self.money = self.money - level.item_price[status]["General"]["Infrared"];
+			self setinfraredvision(1);
+			self useservervisionset(1);
+			self setvisionsetforplayer(level.remore_mortar_infrared_vision, 1);
+		} else {
+			self scripts\mp\zombieland\utils::senderror("AlreadyHasInfrared");
+		}
+	} else {
+		self scripts\mp\zombieland\utils::senderror("MoreMoney");
+	}
 }
