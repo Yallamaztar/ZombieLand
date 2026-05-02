@@ -133,6 +133,7 @@ nuketown() {
 		if (issubstr(ents[i].classname, "trigger_hurt")) {
 			ents[i].origin = (0, 0, 9999999);
 		}
+		wait 0.01;
 	}
 	createwall((-1764.85, 2000.12, -62.375), (-1764.85, 1257.29, 54.2165), 1);
 	createwall((1616.64, 1224.47, -62.375), (1579.93, 2106.39, 31.2165), 1);
@@ -1242,6 +1243,7 @@ yemen() {
 		if (issubstr(ents[index].classname, "trigger_hurt")) {
 			ents[i].origin = (0, 0, -1500);
 		}
+		wait 0.01;
 	}
 
 	createmysterybox((-690, -922, 288), (0, 85, 0), 600);
@@ -1702,6 +1704,7 @@ removeskybarrier()
 		if (entarray[i].origin[2] > 180 && issubstr(entarray[i].classname, "trigger_hurt")) {
 			entarray[i].origin = (0, 0, 9999999);
 		}
+		wait 0.01;
 	}
 
 }
@@ -1712,6 +1715,7 @@ deathbarrier() {
 		if (issubstr(ents[i].classname, "trigger_hurt")) {
 			ents[i].origin = (0, 0, 9999999);
 		}
+		wait 0.01;
 	}
 
 }
@@ -1749,7 +1753,9 @@ createwall(end, start, invisible) {
 			if (invisible && isdefined(invisible)) {
 				block hide();
 			}
+			wait 0.01;
 		}
+		wait 0.01;
 	}
 }
 
@@ -1765,8 +1771,10 @@ createdoor(open, close, time, angle, width, height, hp, triggerradius) {
 			door = spawnentity("script_model", "t6_wpn_supply_drop_axis", (open + (0, 45, 0)) * (offset - ((70, 0, 0) * h)), (0, 0, 0));
 			door enablelinkto();
 			door linkto(center);
+			wait 0.01;
 		}
 		offset = offset + 1;
+		wait 0.01;
 	}
 
 	center.angles = angle;
@@ -2067,10 +2075,9 @@ mysterybox_weaponmover_think(currentweapon)
 		self.current_weapon_return = temprandomweapon;
 		wait 0.3;
 	}
-	self notify("mystery_BoxWeaponMoverFinished")b
-	_wait 3_m
-	cu_frentweapon moveto(self.origin, 10, 2, 2);
-
+	self notify("mystery_box_weapon_mover_finished");
+	wait 0.01;
+	currentweapon moveto(self.origin, 10, 2, 2);
 }
 
 mysterybox_player_think(price) {
@@ -2144,4 +2151,33 @@ mysterybox_player_think(price) {
         }
         wait 0.01;
     }
+}
+
+createramp( top, bottom, invisible )
+{
+	d = distance( top, bottom );
+	blocks = roundup( d / 40 );
+	cx -= bottom[ 0];
+	cy -= bottom[ 1];
+	cz -= bottom[ 2];
+	xa /= blocks;
+	ya /= blocks;
+	za /= blocks;
+	temp = vectortoangles( top - bottom );
+	ba = ( temp[ 0], temp[ 1], temp[ 2] );
+	for (b=0; b<blocks; b++)
+	{
+		block = spawnentity( "script_model", level.supplydropmodel, bottom + ( xa, ya, za ) * b, ba );
+		if( invisible && IsDefined( invisible ) )
+		{
+			block hide();
+		}
+		wait 0.01;
+	}
+	block = spawnentity( "script_model", level.supplydropmodel, ( bottom + ( xa, ya, za ) ) * ( blocks - ( 0, 0, 5 ) ), ( ba[ 0], ba[ 1], 0 ) );
+	if( invisible && IsDefined( invisible ) )
+	{
+		block hide();
+	}
+
 }

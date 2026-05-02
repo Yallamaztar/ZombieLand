@@ -1,13 +1,45 @@
 /*
- * Zombieland (Modernized)
+ * Zombieland (revised)
+ *
+ * Copyright (c) 2026 Budiworld 🍌
+ * Licensed under the MIT License. See LICENSE for details.
+ * 
  * Custom zombies-style gamemode for Plutonium T6MP
  * Revised by @Yallamaztar | Originally made by @CoolJay
+ * https://github.com/Yallamaztar/ZombieLand
+ * 
+ * This is a revised version of the classic Zombieland gamemode
+ * https://cabconmodding.com/threads/zombieland-by-cooljay-black-ops-ii-gamemode-update-8.6947/
+ * Originally created by CoolJay for Black Ops II
+ * 
+ * STILL A WORK IN PROGRESS
+ *
+ * Focusing on
+ *  - Optimizing the code and bring it up to date
+ *  - Fixing issues caused by the decompiler,
+ *  - Adding some new features and easier customizability
+ *
+ * You can view the original decompiled Zombieland 
+ * script in (raw/zombieland_decompiled.gsc)
+ * 
+ * Installation
+ * Drop this file (_zombieland.gsc) and the zombieland/ 
+ * directory into your `scripts\mp\` folder
+ * 
+ * REMEMBER
+ * Set `ui_discord_url` to your discord invite link
+ *
+ * Current TODO 
+ *  - Implement rest of the zombieland\menu.gsc `menu()` functions
+ *  - Create the `openmenu()` function from original zombieland
+ *  - Finish the `initMenu()` function in zombieland\menu.gsc
+ *  - Propably lots more buts focusing on those right now
  */
 
 main() {
-    level.__version__  = "0.1.4";
-    
-    SetGametypeSetting("prematchperiod", 5);    
+    level.__version__  = "0.1.5";
+
+    SetGametypeSetting("prematchperiod", 5);
     SetGametypeSetting("preroundperiod", 5);
     SetMatchTalkFlag("EveryoneHearsEveryone", 1);
 
@@ -18,7 +50,7 @@ main() {
 }
 
 init() {
-    // doesnt work? lmao  
+    // doesnt work? lmao
     // if (GetDvar("g_gametype" != "tdm")) {
     //     PrintLn("[Zombieland] (^1^1error^7): This gamemode is only available in TDM");
     //     return;
@@ -61,8 +93,8 @@ onPlayerSpawned() {
     self thread scripts\mp\zombieland\monitor::hudMonitor();
     self thread scripts\mp\zombieland\monitor::teamMonitor();
     self thread scripts\mp\zombieland\monitor::customTeamMonitor();
-    self thread scripts\mp\zombieland\monitor::damageMonitor(); // TODO: implement damageMonitor()
-    
+    self thread scripts\mp\zombieland\monitor::damageMonitor();
+
     self thread scripts\mp\zombieland\zombies::zombiesuicide();
     self setupTeamDvars();
 
@@ -72,7 +104,7 @@ onPlayerSpawned() {
     for (;;) {
         self waittill("spawned_player");
         self.give_cash = 1;
-        
+
         if (isFirstSpawn) {
             isFirstSpawn = 0;
             if (self ishost()) {
@@ -83,9 +115,7 @@ onPlayerSpawned() {
         self.menu.closeondeath = 0;
 
         if (level.use_custom_maps && !isdefined(level.custom_map_ready)) {
-            // TODO:
-            // create this function
-            // level thread setupCustomMap();
+            level thread scripts\mp\zombieland\maps::setupCustomMap();
 
             level.custom_map_ready = 1;
             self scripts\mp\zombieland\players::resetPerks();
@@ -130,10 +160,8 @@ onPlayerDied() {
             self.pers["deaths"] = 0;
 
             level thread scripts\mp\zombieland\players::setForEveryone("human_died", 1);
-            
-            // TODO:
-            // create the menu() function
-            // self thread scripts\mp\zombieland\menu::menu();
+
+            self thread scripts\mp\zombieland\menu::menu();
             level thread maps\mp\gametypes\_globallogic_ui::closemenus();
         }
 
