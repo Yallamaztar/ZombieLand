@@ -1,8 +1,5 @@
 /*
  * Zombieland (revised)
- *
- * Copyright (c) 2026 Budiworld 🍌
- * Licensed under the MIT License. See LICENSE for details.
  * 
  * Custom zombies-style gamemode for Plutonium T6MP
  * Revised by @Yallamaztar | Originally made by @CoolJay
@@ -34,6 +31,9 @@
  *  - Create the `openmenu()` function from original zombieland
  *  - Finish the `initMenu()` function in zombieland\menu.gsc
  *  - Propably lots more buts focusing on those right now
+ *
+ * Copyright (c) 2026 Budiworld 🍌
+ * Licensed under the MIT License. See LICENSE for details.
  */
 
 main() {
